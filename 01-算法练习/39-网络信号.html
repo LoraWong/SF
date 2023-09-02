@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [
+        [0, 0, 0, -1, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, -1, 4, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, -1],
+        [0, 0, 0, 0, 0],
+      ]
+
+      let m = 6
+      let n = 5
+
+      let direct = [
+        [1, 0],
+        [0, -1],
+        [-1, 0],
+        [0, 1],
+      ]
+      // BFS
+      // num衰减信号值
+      function fs(x, y, num) {
+        // 是否走过
+        // if (arr[x][y] !== 0) return
+        // debugger
+        // 修改值
+        arr[x][y] = num
+
+        // 走下一步
+        for (let i = 0; i < direct.length; i++) {
+          let nextX = x + direct[i][0]
+          let nextY = y + direct[i][1]
+
+          if (nextX >= 0 && nextX < m && nextY >= 0 && nextY < n && arr[nextX][nextY] === 0 && num - 1 > 0) {
+            // debugger
+            fs(nextX, nextY, num - 1)
+          }
+        }
+      }
+
+      // 寻找信号源
+      for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+          if (arr[i][j] > 0) {
+            // debugger
+            fs(i, j, arr[i][j])
+            break
+          }
+        }
+      }
+
+      console.log(arr[1][4])
+    </script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [
+        [1, 3, 5, 1],
+        [2, 1, 5, 10],
+        [3, 2, 7, 12],
+        [5, 4, 9, 21],
+        [6, 4, 2, 22],
+      ]
+
+        // bug: 没写出来
+      // 执行栈 task中，遇到任务压入栈中，时间相同就按优先级排序，永远只执行最后一个
+      // 任务开始，开始计时，任务放入栈中，最后一个任务执行时间递减
+
+      let time = 0
+      let task = []
+      let wait = []
+      let res = []
+      while (arr.length > 0) {
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i][3] === time) {
+            // 是否放入wait：看优先级
+            wait.push([...arr[i]])
+            
+          }
+        }
+        // 优先级排序
+        wait.sort((a,b)=>a[1] - b[1])
+
+        // wait中的任务 放入task执行
+        if(!task.length){
+          task = [...wait.pop()]
+        } else {
+          [task.length-1][2]--
+          if (task[task.length-1][2] == 0) {
+            res.push(task[task.length-1][0], time)
+            // 删除arr中的任务
+            arr = arr.filter(item=> item[0] !== task[task.length-1][0])
+          }
+        }
+
+        time++
+        
+        // debugger
+      }
+
+      console.log(res)
+    </script>
+  </body>
+</html>

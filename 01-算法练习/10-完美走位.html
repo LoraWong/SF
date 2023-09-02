@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+let str = 'AAAA'
+// let str = 'WASDAASD'
+
+fn(str)
+
+function fn(str) {
+  // var char_count = { W: 0, A: 0, S: 0, D: 0 }
+
+  // 先统计 所有字母的个数，判断是否为平衡字符，四个字符都恰好出现 n/4 次，那么它就是一个「平衡字符串」。
+  // 如果不平衡，
+  //  设 partial= 1/4 ，选择 s 的一个子串作为「待替换子串」，
+  // 只有当 s 剩余的部分中‘Q’，‘W’，‘E’，‘R’的出现次数都小于等于 partial 时，才有可能使 s 变为「平衡字符串」。
+
+  let per = str.length / 4
+  
+  // 统计每个字母的数量
+  let count = new Array(26).fill(0)
+  for (let i = 0; i < str.length; i++) {
+    let index = str[i].charCodeAt() - 'A'.charCodeAt()
+    count[index]++
+  }
+
+
+  // 是平衡字符串，直接return 0
+  if (count[idx('W')] === per && count[idx('A')] === per && count[idx('S')] === per && count[idx('D')] === per) {
+    return 0
+  }
+
+  // 滑动窗口，判断可替换字符的最小范围：可替换条件：窗口外的 每字母数量 必须小于或等于 len / 4 ,才有替换的可能
+  // 左右指针移动，寻找 可替换的 子串范围
+
+  // 默认子串为字符串的最大长度
+  let res = str.length
+  
+  // 左指针右移
+  for (let l = 0, r = 0; l < str.length; l++) {
+    // 右指针，不满足条件则右移
+    while (r < str.length && !judge()) {
+      // 进入窗口的字符，数量减1
+      count[idx(str[r])]--
+      r++
+    }
+    // 右指针移到最后，再判断一次, 如果不是平衡字符串，直接结束循环？？？
+    if (!judge()) {
+      break
+    }
+    // 计算窗口内字符长度
+    res = Math.min(r - l, res)
+    // 移动左指针，滑出窗口的 字母 数量加1
+    count[idx(str[l])]++
+  }
+
+  console.log(count, res, per)
+
+
+function idx(str) {
+  return str.charCodeAt() - 'A'.charCodeAt()
+}
+
+// 判断是否为 平衡字符串：四个字母的数量 为 len /4
+function judge() {
+  if (count[idx('W')] > per || count[idx('A')] > per || count[idx('S')] > per || count[idx('D')] > per) {
+    console.log(111)
+    return false
+  }
+  return true
+}
+}
+
+
+
+  </script>
+</body>
+</html>

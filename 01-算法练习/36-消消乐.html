@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 走迷宫问题
+
+      let = arr = [
+        [1, 0, 1],
+        [0, 1, 0],
+        [1, 0, 1],
+      ]
+      let m = 3
+      let n = 3
+      // 走过的 点进行标记，回溯完一遍后，判断是否有没走完的点，如果有继续 下轮回溯
+      let res = 0
+      let direct = [
+        [0, 1],
+        [1, 0],
+        [0, -1],
+        [-1, 0],
+        [1, 1],
+        [-1, 1],
+        [1, -1],
+        [-1, -1],
+      ]
+      let isTo = new Array(m).fill(0).map((s) => new Array(n).fill(0))
+
+      // 以每个点为起点
+
+      // while (arr.toString().includes(1)) {
+        for (let i = 0; i < m; i++) {
+          for (let j = 0; j < n; j++) {
+            if (!isTo[i][j] && arr[i][j] ===1) {
+              df(i, j)
+              res++
+            }
+          }
+        }
+     
+
+      console.log(res, arr)
+
+      function df(x, y) {
+        // 是否走过
+        if (isTo[x][y]) return
+        // 标记走过
+        isTo[x][y] = 1
+        arr[x][y] = 0
+        // 继续下一步
+        for (let i = 0; i < direct.length; i++) {
+          let newX = x + direct[i][0]
+          let newY = x + direct[i][1]
+
+          if (newX >= 0 && newX < m && newY >= 0 && newY < n && arr[newX][newY] === 1) {
+            // debugger
+            df(newX, newY)
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

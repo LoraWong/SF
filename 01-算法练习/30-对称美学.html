@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let res = 'R'
+      let path = []
+
+      function fn(n, k) {
+        for (let i = 1; i < n; i++) {
+          // 循环遍历上一个字符，将 R替换为B，将B替换为R，再和上一个字符链接
+          let temp = ''
+          for (let j = 0; j < res.length; j++) {
+            if (res[j] === 'R') {
+              temp += 'B'
+              // debugger
+            } else if (res[j] === 'B') {
+              temp += 'R'
+            }
+          }
+          // console.log(temp)
+          res = temp + res
+          // console.log(res)
+        }
+        console.log(res)
+        return res[k] === 'B' ? 'blue' : 'red'
+      }
+
+      // console.log(fn(5, 8))
+
+
+
+      // 2：第i个字符串=第i-1号字符串的取反+第i-1号字符串 
+      // 如果k在前半串，则与前一个字符串相反，如果k在后半串，则与前一个字符串的对应的 k 位置相同。
+      // 3：由于当前字符串与前一个字符串存在依赖关系，明显可以用递归的方法去找上一个字符串在对应位置上的字符。
+      function fn1(n,k){
+        // 第一个字符串
+        if(n === 1) return 'R'
+
+        // 如果k在 后半段，则与前一个字符串相同
+        // 
+        let len = 2**(n-1)
+        if(k>= len/2){
+          let index = k - len/2
+          return fn1(n-1, index)
+        } else{
+          return fn1(n-1, k) === 'R' ? 'B' : 'R'
+        }
+      }
+
+      console.log(fn1(64, 73709551616)) // R
+      console.log(fn1(5, 8)) // B
+    </script>
+  </body>
+</html>

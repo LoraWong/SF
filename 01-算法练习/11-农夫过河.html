@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+
+fn(3,5,3)
+
+// 狼 羊 船
+function fn (wolf,sheep,X){
+  // 1. 羊 小于 狼，无解
+  // 做题删除此分支
+  if(sheep<wolf){
+    console.log(0)
+  } else {
+    // 2.羊 大于等于 狼
+
+    // 2.1 狼 < 船：一次性运作所有狼
+    if(wolf<X){
+      // 2.1.1  狼 小于 船的一半，可以运羊
+      if(wolf < X/2){
+        sheep -= -X-wolf
+      }
+      console.log(Math.ceil(sheep/X) +1)
+    } else {
+      // 2.2 狼 大于 船：第一次运 X-1 狼；第二次运 X只羊
+      // 之后，保证每次 运送 羊 多余 狼 一个
+      wolf -= X-1
+      let wolf_op = X-1
+      sheep -= X
+      let sheep_op = X
+      let res = 2
+
+      // 以后每次运送的羊 狼；  羊 多余 狼 一个 
+      let sheep_boat 
+      let wolf_boat 
+      if(X%2==0){
+        sheep_boat = X/2 +1
+      } else {
+        sheep_boat = Math.ceil(X/2)
+      }
+      wolf_boat = X - sheep_boat
+
+      // 无解标记
+      let flag = false
+      while(wolf>0){
+        //2.2.1 需要保证 岸上的羊 比 狼多，或 狼 羊其中一方已经都运走 //tag
+        if(sheep - sheep_boat > wolf - wolf_boat || sheep === sheep_boat && wolf === wolf_boat){
+          wolf -= wolf_boat
+          wolf_op += wolf_boat
+          sheep -= sheep_boat
+          sheep_op += sheep_boat
+          res++
+        } else {
+          // 2.2.2 如果不能保证，要把 狼运先走一些（保证运过去对岸 狼不能 大于 羊
+          // 运过去，狼 多余 羊，则无解
+          // 能运过去的狼数
+          let temp = wolf_op - sheep_op -1
+          // 无狼可以运
+          if(temp==0){
+            console.log(0)
+            flag = true
+            break
+          }
+          // 可以运过去
+          wolf -= temp
+          wolf_op += tmp
+          res++
+        }
+      }
+      // 判断是否有解
+      if(!flag){
+        console.log(res)
+      }
+    }
+  }
+}
+  </script>
+</body>
+</html>

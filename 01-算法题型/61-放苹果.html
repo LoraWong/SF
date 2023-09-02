@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let m = 1,
+        n = 2
+      let arr = new Array(n + 1).fill().map((s) => new Array(m + 1).fill(0))
+
+      let path = 0
+      dfs(0, 0)
+      console.log(path)
+      // console.log( arr)
+      // 以当前坐标点 向上下走，撞墙则回退？？
+      // m+1行n+1列
+      // 当前元素： arr[x][y] x行y列
+      // x 行号[0,m]；y列号[0,n]
+
+      function dfs(x, y) {
+        // 标记走过
+        // console.log([x,y])
+        arr[x][y] = 1
+        if (x === m && y === n) {
+          path += 1
+          //
+          arr[x][y] = 0
+          return
+        }
+        // 向下
+        if (y >= 0 && y <= n && x >= 0 && x + 1 <= m) {
+          if (arr[x + 1][y] !== 1) {
+            dfs(x + 1, y)
+          }
+        }
+        // 向右
+        if (y >= 0 && y + 1 <= n && x >= 0 && x <= m) {
+          if (arr[x][y + 1] !== 1) {
+            dfs(x, y + 1)
+          }
+        }
+        // 走不通，回溯
+        arr[x][y] = 0
+      }
+
+      let str = 'te?t*.*'
+      let target = 'txt12.xls'
+      function fn6(str, target) {
+        str = str.toLowerCase()
+        target = target.toLowerCase()
+        // 将 str 转换为正则，
+        // 使用 正则，替换targe，为空，则说明 str和target相匹配
+
+        str = str.replace(/\*/g, '[a-zA-z0-9]{0,}').replace(/\?/g, '[a-zA-Z0-9]{1}')
+
+        let reg = new RegExp(str)
+
+        target = target.replace(reg, '')
+
+        if (target) {
+          console.log(false)
+        } else {
+          console.log(true)
+        }
+      }
+
+      fn6('**Z', '0QZz')
+    </script>
+  </body>
+</html>

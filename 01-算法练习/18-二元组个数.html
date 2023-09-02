@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+
+// 回溯
+// 横向 for 遍历单个数组中的元素
+// 纵向 查找 下一个数组 中的元素
+
+
+// 方法二：分别存储 两个数组 元素的个数，相同元素的次数相乘 就是该元素可组合的次数
+
+// let arr = [[1,2,3,4],[1]]
+let arr = [[1,1,2,2,4,5], [2,2,4]]
+
+fn(arr)
+
+function fn(arr){
+  let res = []
+  let path = []
+
+  // index 数组索引值（第 i个子数组
+  console.log(arr[1].length)
+
+  function dfs(index){
+    if(index === arr.length){
+      // 判断两个元素是否相等
+      if(path[0] === path[1]){
+        res.push([...path])
+      }
+      return
+    }
+
+    for(let i=0; i<arr[index].length; i++){
+
+      path.push(arr[index][i])
+      dfs(index+1)
+      path.pop()
+    }
+  }
+dfs(0)
+  console.log(res)
+}
+  </script>
+</body>
+</html>
