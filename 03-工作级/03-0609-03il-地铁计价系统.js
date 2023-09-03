@@ -1,3 +1,5 @@
+// 系统设计：！！！！细心，考虑所有情况，注意圈复杂度
+
 class MetroBillSys {
   constructor(cost, price, limit) {
     this.cost = cost
