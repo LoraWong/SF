@@ -11,9 +11,10 @@ let arr = [35, 57, 35, 20, 30]
 
 let arr1 = new Set(arr)
 Array.from(arr1)
-
+// Array.from(arr1) 创建一个新的浅拷贝的数组实例
+let arr2 = [...arr1]
 console.log(arr1)
+// Array.from(arr1) 转换的数组 不能使用 reduce？？？
+let res = arr2.reduce((current, prev) => current + prev, 0)
 
-// let res = arr1.reduce((current, prev) => current + prev, 0)
-
-// console.log(res)
+console.log(res)
