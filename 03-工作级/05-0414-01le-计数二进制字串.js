@@ -6,31 +6,75 @@ let s = '00110011'
 
 let res = []
 let path = []
+
+fn(0)
+console.log(res)
+
 function fn(startIndex) {
-  if (startIndex > s.length) {
-    res.push(path)
+  //如果起始位置大于s的大小，说明找到了一组分割方案
+  if (startIndex >= s.length) {
+    res.push([...path])
     return
   }
 
   // lastIndex
   for (let i = startIndex; i < s.length; i++) {
-    let str = s.substring(startIndex, i + 1)
-    if (isCheck(str)) {
-      path.push(str)
-      fn(i + 1)
-      path.pop()
-    }
+    let str = s.slice(startIndex, i + 1)
+    // if (isCheckOne(str) || isCheckTwo(str)) {
+    //   path.push(str)
+    //   fn(i + 1)
+    //   path.pop()
+    // } else {
+    //   fn(i + 1)
+    // }
+    path.push(str)
+    // 寻找i+1为起始位置的子串
+    fn(startIndex + 1)
+    path.pop()
   }
 }
 
+// console.log(isCheck('000111'))
+
 // 判断回文串
-function isCheck(str) {
+
+// 01
+function isCheckOne(str) {
   if (str.length % 2 !== 0) {
     return false
   }
-  let subLen = str.length / 2
-  let left = str.substring(0, subLen)
-  let right = str.substring(subLen, str.length)
+
+  let left = 0
+  let right = str.length - 1
+
+  while (left < right) {
+    if (str[left] === '0' && str[right] === '1') {
+      left++
+      right--
+    } else {
+      return false
+    }
+  }
+  return true
+}
+
+function isCheckTwo(str) {
+  if (str.length % 2 !== 0) {
+    return false
+  }
+
+  let left = 0
+  let right = str.length - 1
+
+  while (left < right) {
+    if (str[left] === '1' && str[right] === '0') {
+      left++
+      right--
+    } else {
+      return false
+    }
+  }
+  return true
 }
 
 // function isCheck(str) {
